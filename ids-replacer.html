@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>TextCrawler .txc Generator</title>
+<style>
+:root {
+--bg: #f6f8fa;
+--panel: #ffffff;
+--text: #0b1220;
+--muted: #51616f;
+--accent: #2563eb;
+--danger: #e11d48;
+--radius: 10px;
+--mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+}
+
+.dark {
+--bg: #0b1220;
+--panel: #071021;
+--text: #e6eef8;
+--muted: #9fb0c8;
+--accent: #3b82f6;
+--danger: #fb7185;
+}
+
+html,
+body {
+height: 100%;
+}
+
+body {
+margin: 0;
+font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+background: linear-gradient(180deg, var(--bg), rgba(0, 0, 0, 0.02));
+color: var(--text);
+padding: 20px;
+box-sizing: border-box;
+}
+
+.app {
+max-width: 1000px;
+margin: 8px auto;
+display: grid;
+grid-template-columns: 1fr 420px;
+gap: 18px;
+align-items: start;
+}
+
+header {
+grid-column: 1/-1;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 12px;
+margin-bottom: 6px;
+}
+
+header h1 {
+font-size: 18px;
+margin: 0;
+}
+
+header p {
+margin: 0;
+font-size: 13px;
+color: var(--muted);
+}
+
+.card {
+background: var(--panel);
+border-radius: var(--radius);
+box-shadow: 0 6px 18px rgba(14, 30, 37, 0.06);
+padding: 14px;
+}
+
+.left .card {
+min-height: 420px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+label {
+font-size: 13px;
+color: var(--muted);
+display: block;
+margin-bottom: 6px;
+}
+
+textarea.input,
+{
+width: 100%;
+box-sizing: border-box;
+}
+
+textarea,
+pre,
+input[type="text"] {
+width: 100%;
+background: transparent;
+border: 1px solid rgba(15, 23, 42, 0.06);
+padding: 12px;
+border-radius: 8px;
+font-family: var(--mono);
+font-size: 13px;
+color: var(--text);
+resize: vertical;
+box-sizing: border-box;
+}
+
+textarea:focus,
+.preview:focus {
+outline: 2px solid rgba(59, 130, 246, 0.12);
+}
+
+.controls {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+}
+
+button {
+background: var(--muted);
+color: white;
+border: 0;
+padding: 8px 12px;
+border-radius: 8px;
+font-weight: 600;
+cursor: pointer;
+}
+
+button.secondary {
+background: transparent;
+color: var(--accent);
+border: 1px solid rgba(59, 130, 246, 0.12);
+}
+
+button.ghost {
+background: transparent;
+color: var(--muted);
+border: 1px solid rgba(59, 130, 246, 0.06);
+}
+
+button:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+}
+
+.preview {
+min-height: 360px;
+white-space: pre-wrap;
+overflow: auto;
+padding: 12px;
+}
+
+.meta {
+font-size: 13px;
+color: var(--muted);
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.error {
+color: var(--danger);
+font-size: 13px;
+margin-top: 6px;
+}
+
+.right .card {
+min-height: 420px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.small {
+font-size: 12px;
+color: var(--muted);
+}
+
+.top-row {
+display: flex;
+gap: 8px;
+align-items: center;
+justify-content: space-between;
+}
+
+.toggle {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+font-size: 13px;
+color: var(--muted);
+}
+
+.footer {
+grid-column: 1/-1;
+margin-top: 8px;
+font-size: 12px;
+color: var(--muted);
+display: flex;
+justify-content: space-between;
+gap: 12px;
+}
+
+@media (max-width:980px) {
+.app {
+grid-template-columns: 1fr;
+padding-bottom: 80px;
+}
+
+.right .card {
+min-height: 300px;
+}
+}
+</style>
+</head>
+
+<body>
+<div class="app" id="appRoot">
+<header>
+<div>
+<h1>TextCrawler .txc Generator</h1>
+<p>Click Convert → Download to get <strong>ID_Replace_Script.txc</strong>.</p>
+</div>
+<div class="toggle">
+<label for="darkModeToggle">Dark mode</label>
+<input id="darkModeToggle" type="checkbox" />
+</div>
+</header>
+<section class="left">
+<div class="card">
+<div class="top-row">
+<label for="inputArea"><strong>Input your oldID & newID</strong></label>
+<div class="small">Ignored: empty lines</div>
+</div>
+<textarea id="inputArea" rows="14" placeholder="Paste old Ids and New Ids Here.
+Example Format:
+112233  445566
+..."></textarea>
+<div class="controls">
+<button id="convertBtn">Convert → Preview</button>
+<button id="downloadBtn" class="secondary" disabled>Download .txc</button>
+<button id="copyBtn" class="ghost" disabled>Copy to clipboard</button>
+<button id="clearBtn" class="ghost">Clear</button>
+</div>
+<div class="meta">
+<div id="stats">Lines: 0 | Valid pairs: 0</div>
+<div id="msg" class="small">Ready</div>
+</div>
+<div id="errors" class="error" style="display:none;"></div>
+</div>
+</section>
+<aside class="right">
+<div class="card">
+<label><strong>Preview — generated .txc content</strong></label>
+<!-- Using a textarea for easy selection and copy -->
+<textarea id="previewArea" class="preview" rows="20" readonly spellcheck="false">//TextCrawler Script File 1.0
+
+</textarea>
+</div>
+</aside>
+<div class="footer">
+<div>Developed by <a href="https://www.linkedin.com/in/pranay-kumar-sivvam-164539191/" target="_blank"
+style="color: var(--accent); text-decoration: none;">Pranay Kumar Sivvam</a></div>
+</div>
+</div>
+<script>
+const inputArea = document.getElementById('inputArea');
+const previewArea = document.getElementById('previewArea');
+const convertBtn = document.getElementById('convertBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const copyBtn = document.getElementById('copyBtn');
+const clearBtn = document.getElementById('clearBtn');
+const stats = document.getElementById('stats');
+const msg = document.getElementById('msg');
+const errorsDiv = document.getElementById('errors');
+const darkToggle = document.getElementById('darkModeToggle');
+const appRoot = document.getElementById('appRoot');
+
+function parseLines(text) {
+const rawLines = text.replace(/\r/g, '').split('\n');
+const results = [];
+rawLines.forEach((line, index) => {
+const original = line;
+const trimmed = line.trim();
+if (trimmed === '') {
+return;
+}
+const tokens = trimmed.split(/\s+/);
+results.push({ lineIndex: index + 1, raw: original, tokens });
+});
+return results;
+}
+
+function buildTxc(pairs) {
+let out = "//TextCrawler Script File 1.0\n\n";
+
+pairs.forEach(({ oldID, newID }) => {
+out += "!Find\n";
+out += oldID + "\n";
+out += "!Replace\n";
+out += newID + "\n";
+out += "!Options\n";
+out += "Non-RegEx\n";
+out += "!Comment\n";
+out += "\n";
+});
+
+out += "\n!End\n";
+
+return out;
+}
+
+function validate(parsed) {
+const errors = [];
+const pairs = [];
+
+parsed.forEach(item => {
+const tokens = item.tokens;
+if (tokens.length !== 2) {
+errors.push({
+line: item.lineIndex,
+raw: item.raw,
+reason: 'Expected exactly 2 values (oldID and newID). Found ' + tokens.length
+});
+} else {
+const oldID = tokens[0];
+const newID = tokens[1];
+if (oldID === '' || newID === '') {
+errors.push({ line: item.lineIndex, raw: item.raw, reason: 'Empty token found.' });
+} else {
+pairs.push({ oldID, newID });
+}
+}
+});
+
+return { pairs, errors };
+}
+
+function updateUI(parsed, pairs, errors) {
+stats.textContent = `Lines: ${parsed.length} | Valid pairs: ${pairs.length}`;
+if (errors.length) {
+errorsDiv.style.display = 'block';
+errorsDiv.innerHTML = 'Errors:<br>' + errors.map(e => `Line ${e.line}: ${e.reason} — <code>${escapeHtml(e.raw)}</code>`).join('<br>');
+msg.textContent = 'Validation failed — fix errors or remove invalid lines.';
+downloadBtn.disabled = true;
+copyBtn.disabled = true;
+} else {
+errorsDiv.style.display = 'none';
+errorsDiv.innerHTML = '';
+msg.textContent = `Ready — ${pairs.length} pair(s) parsed.`;
+downloadBtn.disabled = (pairs.length === 0);
+copyBtn.disabled = (pairs.length === 0);
+}
+}
+
+function escapeHtml(s) {
+return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+convertBtn.addEventListener('click', () => {
+const text = inputArea.value;
+const parsed = parseLines(text);
+
+const validated = validate(parsed);
+updateUI(parsed, validated.pairs, validated.errors);
+
+if (validated.errors.length === 0) {
+const txc = buildTxc(validated.pairs);
+previewArea.value = txc;
+} else {
+if (validated.pairs.length) {
+previewArea.value = buildTxc(validated.pairs);
+} else {
+previewArea.value = "//TextCrawler Script File 1.0\n\n";
+}
+}
+});
+
+downloadBtn.addEventListener('click', () => {
+const content = previewArea.value;
+if (!content || content.trim() === '') {
+alert('Nothing to download. Convert first.');
+return;
+}
+const filename = 'ID_Replace_Script.txc';
+const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = filename;
+document.body.appendChild(a);
+a.click();
+setTimeout(() => {
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+}, 50);
+});
+
+copyBtn.addEventListener('click', async () => {
+try {
+await navigator.clipboard.writeText(previewArea.value);
+msg.textContent = 'Copied preview to clipboard.';
+} catch (e) {
+previewArea.select();
+msg.textContent = 'Unable to use clipboard API. Preview selected; press Ctrl+C to copy.';
+}
+});
+
+clearBtn.addEventListener('click', () => {
+if (confirm('Clear input and preview?')) {
+inputArea.value = '';
+previewArea.value = "//TextCrawler Script File 1.0\n\n";
+stats.textContent = 'Lines: 0 | Valid pairs: 0';
+msg.textContent = 'Ready';
+errorsDiv.style.display = 'none';
+downloadBtn.disabled = true;
+copyBtn.disabled = true;
+}
+});
+
+darkToggle.addEventListener('change', (e) => {
+if (e.target.checked) {
+document.documentElement.classList.add('dark');
+} else {
+document.documentElement.classList.remove('dark');
+}
+});
+
+inputArea.addEventListener('keydown', (ev) => {
+if ((ev.ctrlKey || ev.metaKey) && ev.key === 'Enter') {
+convertBtn.click();
+}
+});
+
+previewArea.value = "//TextCrawler Script File 1.0\n\n";
+downloadBtn.disabled = true;
+copyBtn.disabled = true;
+inputArea.focus();
+</script>
+</body>
+
+</html>

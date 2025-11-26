@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Process Improvement Tools</title>
+<style>
+html,body{height:100%;margin:0}
+body{
+background:#f7f7f7;
+font-family: Arial, Helvetica, sans-serif;
+align-self: center;
+justify-items: center;
+padding: 30px;
+box-sizing: border-box;
+}
+a.bookmarklet {
+display: inline-block;
+background: #000;
+color: #fff;
+padding: 10px 18px;
+border-radius: 6px;
+text-decoration: none;
+font-weight: bold;
+margin-top: 15px;
+}
+.btn {
+display: inline-block;
+background: #000;
+color: #fff;
+padding: 10px 18px;
+border-radius: 6px;
+text-decoration: none;
+font-weight: bold;
+margin-top: 15px;
+cursor:pointer;
+user-select:none;
+}
+.main{
+width: 60%;
+box-sizing: border-box;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+min-height: 300px;
+gap: 20px;
+text-align: center;
+padding-top: 30px;
+box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+padding: 30px;
+}
+:root{
+--bg: #f6f8fa;
+--panel: #ffffff;
+--text: #0b1220;
+--muted: #51616f;
+--accent: #2563eb;
+--danger: #e11d48;
+--radius: 10px;
+--mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+}
+.dark {
+--bg: #0b1220;
+--panel: #071021;
+--text: #e6eef8;
+--muted: #9fb0c8;
+--accent: #3b82f6;
+--danger: #fb7185;
+}
+.hint { width:100%; font-size: 18px; border: 1px solid black; width: fit-content; padding: 12px 20px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; text-align:center; font-weight:600; color:#111; }
+@media screen and (min-width: 320px) and (max-width: 500px) {
+.main {
+width: 100%;
+padding: 12px;
+box-sizing: border-box;
+}
+.hint{
+font-size: 16px;
+}
+body{
+padding: 14px;
+}
+}
+</style>
+</head>
+<body>
+<div class="hint">Process Improvement Tools</div>
+<div class="main">
+<!-- ALT-Tag -->
+<div>
+<a class="bookmarklet" href="javascript:(function(){var imgs=document.querySelectorAll('img');if(!imgs.length){alert('No <img> tags found.');return;}if(window.__altMode==='on'){document.querySelectorAll('span.__altBox').forEach(function(s){s.remove();});imgs.forEach(function(img){img.style.display=img.dataset.origDisplay||'';});window.__altMode='off';return;}window.__altMode='on';imgs.forEach(function(img){var alt=img.getAttribute('alt');var hasAlt=alt&&alt.trim()!=='';if(!hasAlt)alt='[no alt]';var span=document.createElement('span');span.textContent=alt;span.className='__altBox';var color=hasAlt?'#000000':'#cc0000';var border=hasAlt?'#000000':'#cc0000';var weight=hasAlt?'500':'700';span.style.cssText='display:inline-block;min-width:'+(img.width||50)+'px;min-height:'+(img.height||20)+'px;border:1px solid '+border+';background:#ffffff;color:'+color+';font:16px monospace;font-weight:'+weight+';padding:4px;white-space:normal;';img.dataset.origDisplay=getComputedStyle(img).display;img.style.display='none';img.parentNode.insertBefore(span,img);});})();">
+Alt-Tag
+</a>
+<p style="line-height: 24px;"><strong>⚡ Alt-Tag Tool - Guide</strong><br>
+Drag the Alt-Tag button to your bookmarks → open your HTML email → click the bookmark to show ALT text → click again to bring images back.
+</p>
+</div>
+<!-- Ids QA -->
+<div>
+<a id="bookmarkBtn" class="btn" href="#" title="Drag to bookmarks or click to run">Ids QA</a>
+<p style="line-height: 24px;"><strong>⚡ IDs QA Tool - Guide</strong><br>
+Drag the “IDs QA” button to your bookmarks → open your email HTML → click the bookmark to display all link ID values → click again to return the page to its original state.
+</p>
+</div>
+<!-- Text Utility Tool -->
+<div>
+<a class="bookmarklet" href="https://pranaysivvam003.github.io/Text-Utility-Tool/" target="_blank">
+ Character Converter
+</a>
+<p style="line-height: 24px;">
+<strong>⚡ Character Converter – Task Flow Giude</strong><br>
+Drag the Character Converter button to your bookmarks → paste your code into the left container → click Convert → view the decoded special characters in the right container.
+</p>
+</div>
+<div>
+<a class="bookmarklet" href="https://pranaysivvam003.github.io/Text-Utility-Tool/" target="_blank">
+Text Comparison
+</a>
+<p style="line-height: 24px;">
+<strong>⚡ Text Comparator – Task Flow Guide</strong><br>
+Drag the Text Comparator button to your bookmarks → enter Version 1 (original text) and Version 2 (corrected text) → click Compare → the tool highlights differences and outputs the corrected final text.
+</p>
+</div>
+<!-- Ids Replacer -->
+<div>
+<a class="bookmarklet" href="Ids-Replacer.html">
+TXC-Ids-Replacer
+</a>
+<p style="line-height: 24px;"><strong>⚡ IDs QA Tool - Guide</strong><br>
+Drag the “IDs QA” button to your bookmarks → open your email HTML → click the bookmark to display all link ID values → click again to return the page to its original state.
+</p>
+</div>
+<div class="footer">
+<div>Developed by <a href="https://www.linkedin.com/in/pranay-kumar-sivvam-164539191/" target="_blank" style="color: var(--accent); text-decoration: none;">Pranay Kumar Sivvam</a></div>
+</div>
+<script>
+(function(){
+const bmCode = `(function(){
+if(window.__cg_redlink_active){
+try{ window.__cg_redlink_cleanup && window.__cg_redlink_cleanup(); }catch(e){}
+window.__cg_redlink_active=false;
+console.log('Link highlighter removed');
+return;
+}
+window.__cg_redlink_active=true;
+function previousCleanup(){
+if(window.__cg_redlink_nodes){
+window.__cg_redlink_nodes.forEach(n=>{
+n.overlay&&n.overlay.remove();
+n.label&&n.label.remove();
+});
+window.__cg_redlink_nodes=null;
+}
+if(window.__cg_redlink_handler){
+window.removeEventListener('scroll', window.__cg_redlink_handler, {passive:true});
+window.removeEventListener('resize', window.__cg_redlink_handler);
+window.__cg_redlink_handler=null;
+}
+const old=document.getElementById('__cg_redlink_style');
+if(old) old.remove();
+}
+previousCleanup();
+const style=document.createElement('style');
+style.id='__cg_redlink_style';
+style.textContent='.__cg_redlink_overlay{position:absolute;pointer-events:none;border:2px dashed red;box-sizing:border-box;border-radius:3px;z-index:2147483646}.__cg_redlink_label{position:absolute;z-index:2147483647;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.2;padding:4px 6px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.2);background:#fff;color:#000;border:1px solid rgba(0,0,0,0.18);max-width:420px;word-break:break-all}';
+document.head.appendChild(style);
+function getRawHref(a){ const attr=a.getAttribute('href'); return attr!==null?attr:(a.href||''); }
+const anchors=Array.from(document.querySelectorAll('a[href]'));
+const nodes=[]; const padding=4;
+anchors.forEach(a=>{
+try{
+const rawHref=getRawHref(a).trim();
+if(!rawHref) return;
+const rect=a.getBoundingClientRect();
+if(rect.width<=0 && rect.height<=0) return;
+const ccMatch=rawHref.match(/[?&]ccID=([^&\"']+)/i);
+const labelText=ccMatch?('ID: '+ccMatch[1]):rawHref;
+const overlay=document.createElement('div'); overlay.className='__cg_redlink_overlay';
+const label=document.createElement('div'); label.className='__cg_redlink_label';
+label.textContent=labelText; label.title=rawHref; label.style.pointerEvents='auto';
+document.body.appendChild(overlay); document.body.appendChild(label);
+nodes.push({overlay,label,anchor:a,rawHref});
+}catch(e){ /* skip anchor errors */ }
+});
+function positionAll(){
+const scrollX=window.scrollX||window.pageXOffset, scrollY=window.scrollY||window.pageYOffset;
+const viewportW=document.documentElement.clientWidth, viewportH=document.documentElement.clientHeight;
+nodes.forEach(n=>{
+try {
+const rect=n.anchor.getBoundingClientRect();
+const left=Math.round(rect.left+scrollX);
+const top=Math.round(rect.top+scrollY);
+const width=Math.round(Math.max(2,rect.width));
+const height=Math.round(Math.max(2,rect.height));
+n.overlay.style.left=(left-padding)+'px'; n.overlay.style.top=(top-padding)+'px';
+n.overlay.style.width=(width+padding*2)+'px'; n.overlay.style.height=(height+padding*2)+'px';
+// safe measure
+n.label.style.visibility='hidden'; n.label.style.left=left+'px'; n.label.style.top=top+'px';
+const labRect=n.label.getBoundingClientRect();
+const labW=labRect.width, labH=labRect.height;
+n.label.style.visibility='';
+let labelLeft=left+width+6, labelTop=top;
+if((labelLeft-scrollX)+labW>viewportW){ labelLeft=left-labW-6; if(labelLeft<scrollX+4) labelLeft=scrollX+4; }
+if((labelTop-scrollY)+labH>viewportH){ labelTop=Math.max(scrollY+4, top+height-labH); }
+if(labelLeft < scrollX-100 || labelTop < scrollY-100){
+try{ n.label.remove(); }catch(e){}
+} else {
+n.label.style.left=Math.round(labelLeft)+'px'; n.label.style.top=Math.round(labelTop)+'px';
+}
+} catch(e) { /* ignore per-node errors */ }
+});
+}
+positionAll();
+function handler(){ positionAll(); }
+window.addEventListener('scroll', handler, {passive:true});
+window.addEventListener('resize', handler);
+window.__cg_redlink_nodes=nodes;
+window.__cg_redlink_handler=handler;
+window.__cg_redlink_cleanup=function(){
+previousCleanup();
+try{ delete window.__cg_redlink_nodes; }catch(e){}
+try{ delete window.__cg_redlink_handler; }catch(e){}
+try{ delete window.__cg_redlink_cleanup; }catch(e){}
+window.__cg_redlink_active=false;
+console.log('Link highlighter removed');
+};
+console.log('Link highlighter (final stable) — processed', nodes.length, 'links');
+})();`;
+
+const jsUrl = 'javascript:' + encodeURIComponent(bmCode);
+const btn = document.getElementById('bookmarkBtn');
+
+btn.setAttribute('href', jsUrl);
+
+btn.addEventListener('click', function (ev) {
+ev.preventDefault();
+try {
+(new Function(bmCode))();
+} catch (err) {
+console.error('Failed to run highlighter from button:', err);
+}
+});
+console.log('Button ready — drag it to bookmarks bar or click to run. Screenshot path:', '/mnt/data/e457447d-0898-4ad0-a0be-1aecb74baab7.png');
+})();
+</script>
+</body>
+</html>
